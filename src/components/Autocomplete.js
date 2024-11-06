@@ -3,10 +3,10 @@ import axios from 'axios';
 import booksData from '../assets/books.json';
 
 const Autocomplete = () => {
-    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO;
-    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO;
-    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY;
-    const create_todo_url_key = process.env.REACT_APP_API_CREATE_TODO_KEY;
+    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO || "http://localhost:8000";
+    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO || "http://localhost:8000";
+    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY || "";
+    const create_todo_url_key = process.env.REACT_APP_API_CREATE_TODO_KEY || "";
     const apiKey = process.env.REACT_APP_API_KEY;
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
