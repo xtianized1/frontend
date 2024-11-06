@@ -3,25 +3,33 @@ import axios from 'axios';
 import booksData from '../assets/books.json';
 
 const Autocomplete = () => {
+    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO;
+    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO;
+    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY;
+    const create_todo_url_key = process.env.REACT_APP_API_CREATE_TODO_KEY;
+    const apiKey = process.env.REACT_APP_API_KEY;
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [todo_title, settodo_Title] = useState('');
-    const [highlightedIndex, setHighlightedIndex] = useState(-1); // For keyboard navigation
-    const [todos, setTodos] = useState([]);  // State to hold todos
+    const [highlightedIndex, setHighlightedIndex] = useState(-1); 
+    const [todos, setTodos] = useState([]); 
 
-    // Fetch todos from the database
     const fetchTodos = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/todo_list/');
-            setTodos(response.data);  // Update the state with fetched todos
+            const response = await axios.get(`${fetch_todos_url}/api/books/?query=${searchQuery}`, {
+                headers: {
+                    'Authorization': `Bearer ${fetch_todos_url_key}`
+                }
+            });
+            setTodos(response.data);
         } catch (error) {
             console.error("Error fetching todos:", error);
         }
     };
 
     useEffect(() => {
-        fetchTodos();  // Fetch todos when the component mounts
+        fetchTodos(); 
     }, []);
 
     const handleSearch = (e) => {
@@ -29,22 +37,22 @@ const Autocomplete = () => {
         setQuery(searchQuery);
         
         if (searchQuery.length > 2) {
-            // Filter books based on the search query
+            
             const filteredBooks = booksData.filter(book =>
                 book.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
     
-            setResults(filteredBooks);  // Update the results with filtered books
-            setHighlightedIndex(-1);    // Reset highlight
+            setResults(filteredBooks); 
+            setHighlightedIndex(-1);    
         } else {
-            setResults([]);  // Clear results if query length is less than 3
+            setResults([]);
         }
     };
 
     const handleSelect = (book) => {
         setSelectedBook(book);
-        setQuery(book.title);  // Set input to selected book title
-        setResults([]);         // Hide suggestions after selection
+        setQuery(book.title);  
+        setResults([]);        
         console.log(`Selected book: ${book.title} (ID: ${book.id})`); // Log selected book
     };
 
@@ -69,13 +77,16 @@ const Autocomplete = () => {
     const handleCreateTodo = async () => {
         if (selectedBook && todo_title) {
             try {
-                const response = await axios.post('http://localhost:8000/api/todos/', {
+                const response = await axios.post(create_todo_url, {
                     book_id: selectedBook.id,
                     book_title: selectedBook.title,
-                    todo_title: todo_title
-                });
+                    todo_title: todo_title}, {
+                        headers: {
+                            'Authorization': `Bearer ${create_todo_url_key}`
+                        }
+                    });
 
-                // Add the new todo to the state (local todo list)
+                
                 setTodos((prevTodos) => [
                     ...prevTodos,
                     {
@@ -97,7 +108,7 @@ const Autocomplete = () => {
 
     const handleClearSelection = () => {
         if (selectedBook) {
-            console.log(`Removed selection: ${selectedBook.title} (ID: ${selectedBook.id})`); // Log removed book
+            console.log(`Removed selection: ${selectedBook.title} (ID: ${selectedBook.id})`);
         }
         setSelectedBook(null);
         setQuery('');
@@ -123,7 +134,7 @@ const Autocomplete = () => {
             <ul>
                 {results.map((book, index) => (
                     <li
-                        key={book.id || index}  // Fallback to index if id is not available
+                        key={book.id || index} 
                         onClick={() => handleSelect(book)}
                         className={index === highlightedIndex ? 'highlight' : ''}
                     >
@@ -145,12 +156,11 @@ const Autocomplete = () => {
                 </div>
             )}
             
-            {/* Todo List */}
             <div>
                 <h3>Todo List</h3>
                 <ul>
                     {todos.map((todo, index) => (
-                        <li key={todo.id || index}> {/* Use fallback index if id is missing */}
+                        <li key={todo.id || index}>
                             <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
                                 {todo.todo_title} (Book: {todo.book})
                             </span>
