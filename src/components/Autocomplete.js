@@ -3,11 +3,10 @@ import axios from 'axios';
 import booksData from '../assets/books.json';
 
 const Autocomplete = () => {
-    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO || "http://localhost:8000";
-    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO || "http://localhost:8000";
-    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY || "";
+    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO || "http://localhost:8000/api/todos/";
+    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO || "http://localhost:8000/api/todos/";
+    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY || "WhOP6vCs";
     const create_todo_url_key = process.env.REACT_APP_API_CREATE_TODO_KEY || "";
-    const apiKey = process.env.REACT_APP_API_KEY;
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
@@ -17,7 +16,7 @@ const Autocomplete = () => {
 
     const fetchTodos = async () => {
         try {
-            const response = await axios.get(`${fetch_todos_url}/api/books/?query=${searchQuery}`, {
+            const response = await axios.get(fetch_todos_url, {
                 headers: {
                     'Authorization': `Bearer ${fetch_todos_url_key}`
                 }
@@ -29,19 +28,18 @@ const Autocomplete = () => {
     };
 
     useEffect(() => {
-        fetchTodos(); 
-    }, []);
+        fetchTodos();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);  // Adding an empty dependency array to run only once
 
     const handleSearch = (e) => {
         const searchQuery = e.target.value;
         setQuery(searchQuery);
         
         if (searchQuery.length > 2) {
-            
             const filteredBooks = booksData.filter(book =>
                 book.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
-    
             setResults(filteredBooks); 
             setHighlightedIndex(-1);    
         } else {
@@ -53,7 +51,7 @@ const Autocomplete = () => {
         setSelectedBook(book);
         setQuery(book.title);  
         setResults([]);        
-        console.log(`Selected book: ${book.title} (ID: ${book.id})`); // Log selected book
+        console.log(`Selected book: ${book.title} (ID: ${book.id})`);
     };
 
     const handleKeyDown = (e) => {
@@ -66,9 +64,6 @@ const Autocomplete = () => {
                 prevIndex > 0 ? prevIndex - 1 : results.length - 1
             );
         } else if (e.key === 'Enter' && highlightedIndex >= 0) {
-            handleSelect(results[highlightedIndex]);
-            setHighlightedIndex(-1);
-        } else if (e.key === 'Tab' && highlightedIndex >= 0) {
             handleSelect(results[highlightedIndex]);
             setHighlightedIndex(-1);
         }
@@ -86,7 +81,6 @@ const Autocomplete = () => {
                         }
                     });
 
-                
                 setTodos((prevTodos) => [
                     ...prevTodos,
                     {
