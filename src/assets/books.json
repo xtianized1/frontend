@@ -1,0 +1,213 @@
+[
+    {
+      "id": 1,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "genre": "Fiction",
+      "publication_year": 1960
+    },
+    {
+      "id": 2,
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopian",
+      "publication_year": 1949
+    },
+    {
+      "id": 3,
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "genre": "Romance",
+      "publication_year": 1813
+    },
+    {
+      "id": 4,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "genre": "Classics",
+      "publication_year": 1925
+    },
+    {
+      "id": 5,
+      "title": "Moby-Dick",
+      "author": "Herman Melville",
+      "genre": "Adventure",
+      "publication_year": 1851
+    },
+    {
+      "id": 6,
+      "title": "War and Peace",
+      "author": "Leo Tolstoy",
+      "genre": "Historical Fiction",
+      "publication_year": 1869
+    },
+    {
+      "id": 7,
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "genre": "Fiction",
+      "publication_year": 1951
+    },
+    {
+      "id": 8,
+      "title": "The Odyssey",
+      "author": "Homer",
+      "genre": "Epic",
+      "publication_year": "8th Century BC"
+    },
+    {
+      "id": 9,
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genre": "Fantasy",
+      "publication_year": 1937
+    },
+    {
+      "id": 10,
+      "title": "Crime and Punishment",
+      "author": "Fyodor Dostoevsky",
+      "genre": "Philosophical Fiction",
+      "publication_year": 1866
+    },
+    {
+      "id": 11,
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "genre": "Dystopian",
+      "publication_year": 1932
+    },
+    {
+      "id": 12,
+      "title": "Anna Karenina",
+      "author": "Leo Tolstoy",
+      "genre": "Romance",
+      "publication_year": 1878
+    },
+    {
+      "id": 13,
+      "title": "The Brothers Karamazov",
+      "author": "Fyodor Dostoevsky",
+      "genre": "Philosophical Fiction",
+      "publication_year": 1880
+    },
+    {
+      "id": 14,
+      "title": "Les Misérables",
+      "author": "Victor Hugo",
+      "genre": "Historical Fiction",
+      "publication_year": 1862
+    },
+    {
+      "id": 15,
+      "title": "Jane Eyre",
+      "author": "Charlotte Brontë",
+      "genre": "Gothic Fiction",
+      "publication_year": 1847
+    },
+    {
+      "id": 16,
+      "title": "Frankenstein",
+      "author": "Mary Shelley",
+      "genre": "Science Fiction",
+      "publication_year": 1818
+    },
+    {
+      "id": 17,
+      "title": "Dracula",
+      "author": "Bram Stoker",
+      "genre": "Horror",
+      "publication_year": 1897
+    },
+    {
+      "id": 18,
+      "title": "The Picture of Dorian Gray",
+      "author": "Oscar Wilde",
+      "genre": "Philosophical Fiction",
+      "publication_year": 1890
+    },
+    {
+      "id": 19,
+      "title": "The Call of the Wild",
+      "author": "Jack London",
+      "genre": "Adventure",
+      "publication_year": 1903
+    },
+    {
+      "id": 20,
+      "title": "The Jungle Book",
+      "author": "Rudyard Kipling",
+      "genre": "Adventure",
+      "publication_year": 1894
+    },
+    {
+      "id": 21,
+      "title": "The Scarlet Letter",
+      "author": "Nathaniel Hawthorne",
+      "genre": "Historical Fiction",
+      "publication_year": 1850
+    },
+    {
+      "id": 22,
+      "title": "Wuthering Heights",
+      "author": "Emily Brontë",
+      "genre": "Gothic Fiction",
+      "publication_year": 1847
+    },
+    {
+      "id": 23,
+      "title": "The Divine Comedy",
+      "author": "Dante Alighieri",
+      "genre": "Epic Poetry",
+      "publication_year": 1320
+    },
+    {
+      "id": 24,
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "genre": "Philosophical Fiction",
+      "publication_year": 1922
+    },
+    {
+      "id": 25,
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "genre": "Post-apocalyptic Fiction",
+      "publication_year": 2006
+    },
+    {
+      "id": 26,
+      "title": "The Shining",
+      "author": "Stephen King",
+      "genre": "Horror",
+      "publication_year": 1977
+    },
+    {
+      "id": 27,
+      "title": "The Grapes of Wrath",
+      "author": "John Steinbeck",
+      "genre": "Historical Fiction",
+      "publication_year": 1939
+    },
+    {
+      "id": 28,
+      "title": "The Handmaid's Tale",
+      "author": "Margaret Atwood",
+      "genre": "Dystopian",
+      "publication_year": 1985
+    },
+    {
+      "id": 29,
+      "title": "A Tale of Two Cities",
+      "author": "Charles Dickens",
+      "genre": "Historical Fiction",
+      "publication_year": 1859
+    },
+    {
+      "id": 30,
+      "title": "Gone with the Wind",
+      "author": "Margaret Mitchell",
+      "genre": "Historical Romance",
+      "publication_year": 1936
+    }
+  ]
+  

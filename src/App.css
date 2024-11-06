@@ -36,3 +36,57 @@
     transform: rotate(360deg);
   }
 }
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  width: 100%;
+}
+
+li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+li:hover, .highlight {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+  width: 100%;
+}
+
+li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+li.highlight {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
