@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import booksData from '../assets/books.json';
+import { getAuthToken } from '../auth';
 
 const Autocomplete = () => {
-    const fetch_todos_url = process.env.REACT_APP_API_FETCH_TODO || "http://localhost:8000/api/todos/";
-    const create_todo_url = process.env.REACT_APP_API_CREATE_TODO || "http://localhost:8000/api/todos/";
-    const fetch_todos_url_key = process.env.REACT_APP_API_FETCH_TODO_KEY || "WhOP6vCs";
-    const create_todo_url_key = process.env.REACT_APP_API_CREATE_TODO_KEY || "";
+    const API_Url = process.env.DJANGO_API_URL || "https://backend-production-207b.up.railway.app/api/";
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
@@ -16,14 +13,17 @@ const Autocomplete = () => {
 
     const fetchTodos = async () => {
         try {
-            const response = await axios.get(fetch_todos_url, {
-                headers: {
-                    'Authorization': `Bearer ${fetch_todos_url_key}`
-                }
-            });
-            setTodos(response.data);
+            const token = getAuthToken();
+            if (token) {
+                const response = await axios.get(`${API_Url}user-todos/`, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setTodos(response.data);
+            }
         } catch (error) {
-            console.error("Error fetching todos:", error);
+            console.error('Error fetching todos:', error);
         }
     };
 
@@ -32,16 +32,18 @@ const Autocomplete = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);  // Adding an empty dependency array to run only once
 
-    const handleSearch = (e) => {
+    
+    const handleSearch = async (e) => {
         const searchQuery = e.target.value;
         setQuery(searchQuery);
         
         if (searchQuery.length > 2) {
-            const filteredBooks = booksData.filter(book =>
-                book.title.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setResults(filteredBooks); 
-            setHighlightedIndex(-1);    
+            try {
+                const response = await axios.get(`${API_Url}books/?query=${searchQuery}`);
+                setResults(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         } else {
             setResults([]);
         }
@@ -72,12 +74,13 @@ const Autocomplete = () => {
     const handleCreateTodo = async () => {
         if (selectedBook && todo_title) {
             try {
-                const response = await axios.post(create_todo_url, {
+                const token = getAuthToken();
+                const response = await axios.post(`${API_Url}todos/`, {
                     book_id: selectedBook.id,
                     book_title: selectedBook.title,
                     todo_title: todo_title}, {
                         headers: {
-                            'Authorization': `Bearer ${create_todo_url_key}`
+                            'Authorization': `Token ${token}`
                         }
                     });
 
@@ -100,20 +103,47 @@ const Autocomplete = () => {
         }
     };
 
+    const handleDeleteTodo = async (todo_id) => {
+        try {
+            const token = getAuthToken();
+            await axios.delete(`${API_Url}delete-todos/${todo_id}/`, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            });
+
+            fetchTodos();
+        } catch (error) {
+            console.error("Error deleting todo:", error);
+        }
+    };
+
+    const handleToggleCompletion = async (todo_id) => {
+        try {
+            const token = getAuthToken();
+            await axios.post(`${API_Url}mark-todos/${todo_id}/`, {}, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            });
+
+            setTodos((prevTodos) =>
+                prevTodos.map((todo) =>
+                    todo.id === todo_id ? { ...todo, completed: !todo.completed } : todo
+                )
+            );
+        } catch (error) {
+            console.error("Error updating todo:", error);
+        }
+        
+    };
+
     const handleClearSelection = () => {
         if (selectedBook) {
             console.log(`Removed selection: ${selectedBook.title} (ID: ${selectedBook.id})`);
         }
         setSelectedBook(null);
         setQuery('');
-    };
-
-    const handleToggleCompletion = (id) => {
-        setTodos((prevTodos) =>
-            prevTodos.map((todo) =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            )
-        );
     };
 
     return (
@@ -160,6 +190,9 @@ const Autocomplete = () => {
                             </span>
                             <button onClick={() => handleToggleCompletion(todo.id)}>
                                 {todo.completed ? 'Mark Incomplete' : 'Mark Complete'}
+                            </button>
+                            <button onClick={() => handleDeleteTodo(todo.id)}>
+                                Delete
                             </button>
                         </li>
                     ))}
